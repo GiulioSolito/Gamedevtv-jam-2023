@@ -1,15 +1,17 @@
-﻿using System.Collections;
+﻿using StarterAssets;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    [SerializeField] private GameObject fader;
     [SerializeField] private TextMeshProUGUI interactText;
     [SerializeField] private GameObject keypadUI;
 
     public static UIManager Instance;
-
+    
     private void OnEnable()
     {
         //Player.onInteractHover += ShowInteractText;
@@ -22,11 +24,6 @@ public class UIManager : MonoBehaviour
         { 
             Instance = this; 
         }
-    }
-
-    private void Start()
-    {
-        //_playerController = FindObjectOfType<FPS_Controller>();
     }
 
     public void ShowInteractText(string text)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine;
 public class DimensionSwitcher : MonoBehaviour
 {
     private CurrentDimension currentDimension;
+
+    public static Action onDimensionSwitch;
 
     // Start is called before the first frame update
     private void Start()
@@ -16,7 +19,10 @@ public class DimensionSwitcher : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            GameManager.instance.SwitchDimension();
             currentDimension = GameManager.instance.GetCurrentDimension();
+
+            onDimensionSwitch?.Invoke();
         }
     }
 }

@@ -9,16 +9,15 @@ public class Fader : MonoBehaviour
     private Animator animator;
     private PlayerInput playerInput;
 
+    private void OnEnable()
+    {
+        DimensionSwitcher.onDimensionSwitch += Fade;
+    }
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
         playerInput = FindAnyObjectByType<PlayerInput>();
-    }
-
-    // Start is called before the first frame update
-    private void Start()
-    {
-        
     }
 
     // Update is called once per frame
@@ -43,5 +42,10 @@ public class Fader : MonoBehaviour
     public void EnableInput()
     {
         playerInput.enabled = true;
+    }
+
+    private void OnDisable()
+    {
+        DimensionSwitcher.onDimensionSwitch -= Fade;
     }
 }

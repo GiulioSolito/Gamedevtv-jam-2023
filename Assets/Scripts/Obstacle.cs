@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Obstacle : MonoBehaviour
+public class Obstacle : DimensionObject
 {
-    [SerializeField] private CurrentDimension blockInDimension;
-
     private Collider obstacleCollider;
     private MeshRenderer meshRenderer;
-
-    private void OnEnable()
-    {
-        DimensionSwitcher.onDimensionSwitch += CheckDimensionState;
-    }
 
     private void Awake()
     {
@@ -20,11 +13,11 @@ public class Obstacle : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
     }
 
-    private void CheckDimensionState()
+    protected override void CheckDimensionState()
     {
-        Debug.Log("Checking");
+        base.CheckDimensionState();
 
-        if (GameManager.instance.GetCurrentDimension() == blockInDimension)
+        if (GameManager.instance.GetCurrentDimension() == enableInDimension)
         {
             obstacleCollider.enabled = true;
             meshRenderer.enabled = true;
@@ -34,10 +27,5 @@ public class Obstacle : MonoBehaviour
             obstacleCollider.enabled = false;
             meshRenderer.enabled = false;
         }
-    }
-
-    private void OnDisable()
-    {
-        DimensionSwitcher.onDimensionSwitch -= CheckDimensionState;
     }
 }

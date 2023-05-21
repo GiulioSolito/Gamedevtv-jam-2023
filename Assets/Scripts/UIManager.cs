@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject fader;
     [SerializeField] private TextMeshProUGUI interactText;
     [SerializeField] private GameObject keypadUI;
+
+    private PlayerInput playerInput;
 
     public static UIManager Instance;
     
@@ -24,6 +27,8 @@ public class UIManager : MonoBehaviour
         { 
             Instance = this; 
         }
+
+        playerInput = FindObjectOfType<PlayerInput>();
     }
 
     public void ShowInteractText(string text)
@@ -41,8 +46,8 @@ public class UIManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         keypadUI.SetActive(true);
-        //HideInteractText();
-        //playerController.enabled = false;
+        HideInteractText();
+        playerInput.enabled = false;
     }
 
     public void HideKeypadUI()
@@ -50,10 +55,10 @@ public class UIManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         //_keypadUI.SetActive(false);
-        //_playerController.enabled = true;
+        playerInput.enabled = true;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         //Player.onInteractHover -= ShowInteractText;
         //Player.onInteractHoverEnd -= HideInteractText;

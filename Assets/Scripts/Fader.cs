@@ -1,4 +1,5 @@
 using StarterAssets;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class Fader : MonoBehaviour
 {
     private Animator animator;
     private PlayerInput playerInput;
+
+    public static Action onFadeComplete;
 
     private void OnEnable()
     {
@@ -31,17 +34,22 @@ public class Fader : MonoBehaviour
 
     public void Fade()
     {
-        animator.SetTrigger("Fade");
+        animator.SetTrigger("Fade");        
+    }
+
+    public void FadeComplete()
+    {
+        onFadeComplete?.Invoke();
     }
 
     public void DisableInput()
     {
-        playerInput.enabled = false;
+        playerInput.enabled = false;        
     }
 
     public void EnableInput()
     {
-        playerInput.enabled = true;
+        playerInput.enabled = true;        
     }
 
     private void OnDisable()

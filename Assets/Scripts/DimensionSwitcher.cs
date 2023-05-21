@@ -46,9 +46,10 @@ public class DimensionSwitcher : MonoBehaviour
     {
         if (exitPoint != null)
         {
-            Debug.Log("Moving Player");
+            if (player == null) yield break;
             player.GetComponent<ThirdPersonController>().enabled = false;
             player.transform.position = exitPoint.position;
+            
             yield return new WaitForSeconds(1);
             player.GetComponent<ThirdPersonController>().enabled = true;
         }

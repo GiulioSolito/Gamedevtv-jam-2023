@@ -15,6 +15,7 @@ public class Fader : MonoBehaviour
     private void OnEnable()
     {
         DimensionSwitcher.onDimensionSwitch += Fade;
+        Exit.onCompleteLevel += Fade;
     }
 
     private void Awake()
@@ -23,18 +24,20 @@ public class Fader : MonoBehaviour
         playerInput = FindAnyObjectByType<PlayerInput>();
     }
 
-    // Update is called once per frame
-    private void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.K))
+        if (animator != null)
         {
-            Fade();
+            animator.SetTrigger("FadeOut");
         }
     }
 
     public void Fade()
     {
-        animator.SetTrigger("Fade");        
+        if (animator != null)
+        {
+            animator.SetTrigger("Fade");
+        }
     }
 
     public void FadeComplete()
@@ -55,5 +58,6 @@ public class Fader : MonoBehaviour
     private void OnDisable()
     {
         DimensionSwitcher.onDimensionSwitch -= Fade;
+        Exit.onCompleteLevel -= Fade;
     }
 }

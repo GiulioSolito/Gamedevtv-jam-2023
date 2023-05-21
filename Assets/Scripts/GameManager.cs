@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviour
 
     public void SwitchDimension()
     {
+        Debug.Log("Switching Dimensions");
+
         switch (currentDimension)
         {
             case CurrentDimension.NormalDimension:

@@ -2,59 +2,58 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class Keypad : MonoBehaviour
 {
-    [SerializeField] private string _codeToUnlock = "0000";         //TODO: Change to private later, no need to see it
-    [SerializeField] private string _codeEntered;                   //TODO: Change to private later, no need to see it
-    [SerializeField] private TextMeshProUGUI _codeText;
-    [SerializeField] private int _maxAllowedNumbers = 4;            //How long we want the key code to be
+    [SerializeField] private string codeToUnlock = "0000";
+    [SerializeField] private string codeEntered;
+    [SerializeField] private TextMeshProUGUI codeText;
+    [SerializeField] private int maxAllowedNumbers = 4;
 
-    public delegate void OnCorrectCodeEntered();
-    public static event OnCorrectCodeEntered _OnCorrectCodeEntered;
+    public static Action onCorrectCodeEntered;
 
-    public bool _correctCodeEntered = false;
+    public bool correctCodeEntered = false;
 
-    // Start is called before the first frame update
-    void OnEnable()
+    public void OnEnable()
     {
         KeypadTrigger.onSetCode += SetCode;
 
-        _codeEntered = "";
-        _codeText.text = "CODE";
+        codeEntered = "";
+        codeText.text = "CODE";
     }
 
     public void SetCode(string code)
     {
-        _codeToUnlock = code;
+        codeToUnlock = code;
     }
 
     public void AddKeyToCode(string key)
     {
-        if (_codeEntered.Length < _maxAllowedNumbers)
+        if (codeEntered.Length < maxAllowedNumbers)
         {
-            _codeEntered += key;
-            _codeText.text = _codeEntered;
+            codeEntered += key;
+            codeText.text = codeEntered;
         }
     }
 
     public void SubmitCode()
     {
-        if (_codeText.text == _codeToUnlock)
+        if (codeText.text == codeToUnlock)
         {
             Debug.Log("You have entered the correct code!");
-            _correctCodeEntered = true;
+            correctCodeEntered = true;
 
-            if (_OnCorrectCodeEntered != null)
+            if (onCorrectCodeEntered != null)
             {
-                _OnCorrectCodeEntered();
+                onCorrectCodeEntered();
             }
         }
         else
         {
             Debug.Log("You have entered the incorrect code!");
-            _codeEntered = "";
-            _codeText.text = "";
+            codeEntered = "";
+            codeText.text = "";
         }
     }
 
@@ -62,7 +61,7 @@ public class Keypad : MonoBehaviour
     {
         KeypadTrigger.onSetCode -= SetCode;
 
-        _codeEntered = "";
-        _codeText.text = "";
+        codeEntered = "";
+        codeText.text = "";
     }
 }

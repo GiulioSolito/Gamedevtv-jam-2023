@@ -9,7 +9,7 @@ public class KeypadTrigger : Puzzle
 
     private void OnEnable()
     {
-        Keypad._OnCorrectCodeEntered += OpenDoor;
+        Keypad.onCorrectCodeEntered += OpenDoor;
     }
 
     private void Update()
@@ -26,7 +26,13 @@ public class KeypadTrigger : Puzzle
         }
     }
 
-    public override void OnTriggerExit(Collider other)
+    protected override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+        UIManager.Instance.ShowInteractText("Key Pad");
+    }
+
+    protected override void OnTriggerExit(Collider other)
     {
         base.OnTriggerExit(other);
         UIManager.Instance.HideKeypadUI();
@@ -40,7 +46,7 @@ public class KeypadTrigger : Puzzle
         } 
     }
 
-    public override void OpenDoor()
+    protected override void OpenDoor()
     {
         base.OpenDoor();
         Debug.Log("Correct code entered! Opening Door");
@@ -49,6 +55,6 @@ public class KeypadTrigger : Puzzle
 
     private void OnDisable()
     {
-        Keypad._OnCorrectCodeEntered -= OpenDoor;
+        Keypad.onCorrectCodeEntered -= OpenDoor;
     }
 }

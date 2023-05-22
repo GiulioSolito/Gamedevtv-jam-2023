@@ -54,7 +54,7 @@ public class UIManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        //_keypadUI.SetActive(false);
+        keypadUI.SetActive(false);
         playerInput.enabled = true;
     }
 

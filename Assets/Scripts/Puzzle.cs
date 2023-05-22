@@ -13,22 +13,23 @@ public abstract class Puzzle : MonoBehaviour
     protected bool doorOpened = false;
 
     protected Animator anim;
+    protected Dissolve dissolve;
 
-    private void Start()
+    private void Awake()
     {
         anim = doorToOpen.GetComponent<Animator>();
+        dissolve = doorToOpen.GetComponent<Dissolve>();
     }
 
-    public virtual void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            canInteract = true;
-            UIManager.Instance.ShowInteractText("Key Pad");
+            canInteract = true;            
         }
     }
 
-    public virtual void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
         {
@@ -37,12 +38,22 @@ public abstract class Puzzle : MonoBehaviour
         }
     }
 
-    public virtual void OpenDoor()
+    protected virtual void OpenDoor()
     {
         if (doorToOpen != null)
         {
-            anim.SetTrigger("OpenDoor");
+            if (anim != null)
+            {
+                anim.SetTrigger("OpenDoor");
+            }
+
+            if (dissolve != null)
+            {
+                dissolve.DissolveOut();
+            }           
+
             Destroy(GetComponent<Collider>());
+            Destroy(doorToOpen.GetComponent<Collider>());
 
             if (exitKeypad != null)
             {

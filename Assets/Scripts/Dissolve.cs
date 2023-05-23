@@ -11,8 +11,8 @@ public class Dissolve : MonoBehaviour
     [SerializeField] private float dissolveOutSpeed = 0.2f;
     [Range(0,1)] [SerializeField] private float dissolve = 1f;
 
-    public bool isDissolvingIn = false;
-    public bool isDissolvingOut = false;
+    private bool isDissolvingIn = false;
+    private bool isDissolvingOut = false;
 
     private void Awake()
     {

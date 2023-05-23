@@ -11,6 +11,11 @@ public abstract class DimensionObject : MonoBehaviour
         DimensionSwitcher.onDimensionSwitch += CheckDimensionState;
     }
 
+    private void Start()
+    {
+        CheckDimensionState();
+    }
+
     protected virtual void CheckDimensionState()
     {
         Debug.Log("Checking");

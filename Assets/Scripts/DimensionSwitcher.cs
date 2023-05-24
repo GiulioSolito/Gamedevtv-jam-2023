@@ -12,11 +12,18 @@ public class DimensionSwitcher : MonoBehaviour
 
     private GameObject player;
 
+    private AudioSource audioSource;
+
     public static Action onDimensionSwitch;
 
     private void OnEnable()
     {
         Fader.onFadeComplete += MovePlayer;
+    }
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -34,6 +41,7 @@ public class DimensionSwitcher : MonoBehaviour
             currentDimension = GameManager.instance.GetCurrentDimension();
 
             onDimensionSwitch?.Invoke();
+            audioSource.Play();
         }
     }
 
@@ -49,7 +57,7 @@ public class DimensionSwitcher : MonoBehaviour
             if (player == null) yield break;
             //player.GetComponent<ThirdPersonController>().enabled = false;
             player.GetComponent<FirstPersonController>().enabled = false;
-            player.transform.position = exitPoint.position;
+            player.transform.position = exitPoint.position;            
             
             yield return new WaitForSeconds(1);
             //player.GetComponent<ThirdPersonController>().enabled = true;

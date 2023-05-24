@@ -11,11 +11,15 @@ public class Keypad : MonoBehaviour
     [SerializeField] private TextMeshProUGUI codeText;
     [SerializeField] private int maxAllowedNumbers = 4;
 
+    [SerializeField] private AudioClip correctSound;
+    [SerializeField] private AudioClip inCorrectSound;
+
     public static Action onCorrectCodeEntered;
 
     public bool correctCodeEntered = false;
 
-    public GameObject activePuzzle = null;
+    private GameObject activePuzzle = null;
+    private AudioSource audioSource;
 
     public void OnEnable()
     {
@@ -25,6 +29,11 @@ public class Keypad : MonoBehaviour
 
         codeEntered = "";
         codeText.text = "CODE";
+    }
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void SetCode(string code)
@@ -45,6 +54,9 @@ public class Keypad : MonoBehaviour
     {
         if (codeText.text == codeToUnlock)
         {
+            audioSource.clip = correctSound;
+            audioSource.Play();
+
             Debug.Log("You have entered the correct code!");
             correctCodeEntered = true;
 
@@ -55,9 +67,12 @@ public class Keypad : MonoBehaviour
         }
         else
         {
+            audioSource.clip = inCorrectSound;
+            audioSource.Play();
+
             Debug.Log("You have entered the incorrect code!");
             codeEntered = "";
-            codeText.text = "";
+            codeText.text = "INCORRECT";
         }
     }
 

@@ -45,7 +45,7 @@ public class UIManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        keypadUI.SetActive(true);
+        keypadUI.GetComponent<CanvasGroup>().alpha = 1;
         HideInteractText();
         playerInput.enabled = false;
     }
@@ -54,7 +54,7 @@ public class UIManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        keypadUI.SetActive(false);
+        keypadUI.GetComponent<CanvasGroup>().alpha = 0;
         playerInput.enabled = true;
     }
 

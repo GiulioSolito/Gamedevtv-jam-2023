@@ -38,7 +38,7 @@ public abstract class Puzzle : MonoBehaviour
         }
     }
 
-    protected virtual void OpenDoor()
+    public virtual void OpenDoor()
     {
         if (doorToOpen != null)
         {

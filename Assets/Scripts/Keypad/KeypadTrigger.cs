@@ -6,11 +6,13 @@ using UnityEngine;
 public class KeypadTrigger : Puzzle
 {
     public static Action<string> onSetCode;
+    public static Action<GameObject> onEnterTrigger;
+    public static Action onExitTrigger;
 
-    private void OnEnable()
-    {
-        Keypad.onCorrectCodeEntered += OpenDoor;
-    }
+    //private void OnEnable()
+    //{
+    //    Keypad.onCorrectCodeEntered += OpenDoor;
+    //}
 
     private void Update()
     {
@@ -28,12 +30,14 @@ public class KeypadTrigger : Puzzle
 
     protected override void OnTriggerEnter(Collider other)
     {
+        onEnterTrigger?.Invoke(gameObject);
         base.OnTriggerEnter(other);
         UIManager.Instance.ShowInteractText("Key Pad");
     }
 
     protected override void OnTriggerExit(Collider other)
     {
+        onExitTrigger?.Invoke();
         base.OnTriggerExit(other);
         UIManager.Instance.HideKeypadUI();
     }
@@ -46,15 +50,15 @@ public class KeypadTrigger : Puzzle
         } 
     }
 
-    protected override void OpenDoor()
+    public override void OpenDoor()
     {
         base.OpenDoor();
         Debug.Log("Correct code entered! Opening Door");
         UIManager.Instance.HideKeypadUI();   
     }
 
-    private void OnDisable()
-    {
-        Keypad.onCorrectCodeEntered -= OpenDoor;
-    }
+    //private void OnDisable()
+    //{
+    //    Keypad.onCorrectCodeEntered -= OpenDoor;
+    //}
 }

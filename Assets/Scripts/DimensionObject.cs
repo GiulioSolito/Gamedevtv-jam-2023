@@ -18,7 +18,7 @@ public abstract class DimensionObject : MonoBehaviour
 
     protected virtual void CheckDimensionState()
     {
-        Debug.Log("Checking");
+
     }
 
     private void OnDisable()

@@ -26,13 +26,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        currentDimension = CurrentDimension.NormalDimension;
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        
+        //currentDimension = CurrentDimension.NormalDimension;
     }
 
     public CurrentDimension GetCurrentDimension()

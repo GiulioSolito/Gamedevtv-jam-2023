@@ -15,9 +15,13 @@ public class Keypad : MonoBehaviour
 
     public bool correctCodeEntered = false;
 
+    public GameObject activePuzzle = null;
+
     public void OnEnable()
     {
         KeypadTrigger.onSetCode += SetCode;
+        KeypadTrigger.onEnterTrigger += SetActivePuzzle;
+        KeypadTrigger.onExitTrigger += ResetActivePuzzle;
 
         codeEntered = "";
         codeText.text = "CODE";
@@ -44,10 +48,10 @@ public class Keypad : MonoBehaviour
             Debug.Log("You have entered the correct code!");
             correctCodeEntered = true;
 
-            if (onCorrectCodeEntered != null)
-            {
-                onCorrectCodeEntered();
-            }
+            activePuzzle.GetComponent<KeypadTrigger>().OpenDoor();
+            codeEntered = "";
+            codeText.text = "CODE";
+            correctCodeEntered = false;
         }
         else
         {
@@ -59,9 +63,24 @@ public class Keypad : MonoBehaviour
 
     public void ClearCode()
     {
-        KeypadTrigger.onSetCode -= SetCode;
-
         codeEntered = "";
         codeText.text = "";
+    }
+
+    private void SetActivePuzzle(GameObject currentActivePuzzle)
+    {
+        activePuzzle = currentActivePuzzle;
+    }
+
+    private void ResetActivePuzzle()
+    {
+        activePuzzle = null;
+    }
+
+    public void OnDisable()
+    {
+        KeypadTrigger.onSetCode -= SetCode;
+        KeypadTrigger.onEnterTrigger -= SetActivePuzzle;
+        KeypadTrigger.onExitTrigger -= ResetActivePuzzle;
     }
 }
